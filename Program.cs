@@ -21,8 +21,6 @@ class Program
         /*
         cc.GetFinal();
         cc.MakeClass();
-        utility.TestTiger();
-        
         string input = Console.ReadLine().ToLower();
         string[] command = input.Split(" ");
         while (true)
@@ -32,13 +30,13 @@ class Program
                 case "exit":
                     Environment.Exit(0);
                     break;
+
                 default:
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("Unknown command");
                     Console.ResetColor();
                     break;
             }
-        }
-        */
+        }*/
     }
 }

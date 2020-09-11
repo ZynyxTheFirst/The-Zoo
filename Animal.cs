@@ -1,8 +1,10 @@
 ﻿abstract class Animal
 {
-    public string name;
-    public int age;
+    protected string name;
+    protected int age;
 
+
+    //public abstract void SetUniquiMember(string value);
     public override string ToString()
     {
         return "Name:" + name + "\nAge:" + age;
