@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 class Program
 {
     readonly Utility utility = new Utility();
-    CreateClass cc = new CreateClass();
+    readonly CreateClass cc = new CreateClass();
+    readonly RndIDGen rid = new RndIDGen();
     static void Main()
     {
         Program p = new Program();
@@ -17,10 +18,10 @@ class Program
 
     public void Run()
     {
-        cc.MakeClass();
-        /*
-        cc.GetFinal();
-        cc.MakeClass();
+        //cc.MakeClass();
+        Console.WriteLine(rid.AnimalId());
+        //cc.GetFinal();
+        //cc.MakeClass();
         string input = Console.ReadLine().ToLower();
         string[] command = input.Split(" ");
         while (true)
@@ -30,13 +31,13 @@ class Program
                 case "exit":
                     Environment.Exit(0);
                     break;
-
+                
                 default:
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("Unknown command");
                     Console.ResetColor();
                     break;
             }
-        }*/
+        }
     }
 }
