@@ -1,6 +1,4 @@
-﻿using System;
-
-class Owl : Animal
+﻿class Owl : Animal
 {
     readonly RndIDGen rid = new RndIDGen();
     public int wingspan;
@@ -16,12 +14,12 @@ class Owl : Animal
         {
             return $"Owl; DECEASED; Date of Death: {deathDate}, Id: {Id}, Name: {name}, Age: {age}, Wingspan: {wingspan}";
         }
-        return $"Owl; Id: {Id}, Name: {name}, Age: {age}, Wingspan: {wingspan}";
+        else return $"Owl; Id: {Id}, Name: {name}, Age: {age}, Wingspan: {wingspan}";
     }
     
     public override string Info()
     {
-        return $"Owl,{Id},{name},{age},{wingspan},{deceased},{deathDate}";
+        return $"Owl,{Id},{name},{age},{deceased},{deathDate},{wingspan}";
     }
 
     public Owl(string name, int age, int wingspan) : base(name, age)

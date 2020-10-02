@@ -9,7 +9,7 @@ class Utility
     readonly List<Animal> animals = new List<Animal>();
     public void Save()
     {
-        StreamWriter animalsw = new StreamWriter(path, true);
+        StreamWriter animalsw = new StreamWriter(path);
         foreach (Animal a in animals)
         {
             animalsw.WriteLine(a.Info());
@@ -24,13 +24,13 @@ class Utility
         while ((text = animalsr.ReadLine()) != null)
         {
             string[] strings = text.Split(char.Parse(","));
-            if (Convert.ToBoolean(strings[5]) == true)
+            if (bool.Parse(strings[4]) == true)
             {
-                NewAnimal(strings[0], strings[2], Int32.Parse(strings[3]), Int32.Parse(strings[4]), Convert.ToBoolean(strings[5]), strings[6]);
+                NewAnimal(strings[0], strings[2], Int32.Parse(strings[3]), Int32.Parse(strings[6]), bool.Parse(strings[4]), strings[5]);
             }
             else
             {
-                NewAnimal(strings[0], strings[2], Int32.Parse(strings[3]), Int32.Parse(strings[4]), Convert.ToBoolean(strings[5]));
+                NewAnimal(strings[0], strings[2], Int32.Parse(strings[3]), Int32.Parse(strings[6]));
             }
             
         }
@@ -44,8 +44,8 @@ class Utility
             foreach (Animal a in animals)
             {
                 Console.WriteLine(a.ToString());
-                return;
             }
+            return;
         }
         Console.WriteLine("empty.");
     }
@@ -58,7 +58,7 @@ class Utility
             {
                 if (animals[i].GetName().ToLower() == name.ToLower())
                 {
-                    throw new Exception();
+                    Console.WriteLine("Name unavailable");
                 }
             }
         }
@@ -82,6 +82,10 @@ class Utility
                     //input parameters
                     var animal = Activator.CreateInstance(type, name, age, unique);
                     animals.Add(animal as Animal);
+                    if (deceased == true)
+                    {
+                        (animal as Animal).SetDeath(date);
+                    }
                     return;
                 }
 
@@ -121,6 +125,6 @@ class Utility
 
     public void Sort()
     {
-
+        
     }
 }

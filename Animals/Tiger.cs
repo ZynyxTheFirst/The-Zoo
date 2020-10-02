@@ -1,6 +1,4 @@
-﻿using System;
-
-class Tiger : Animal
+﻿class Tiger : Animal
 {
     readonly RndIDGen rid = new RndIDGen();
     public int weight;
@@ -21,7 +19,7 @@ class Tiger : Animal
 
     public override string Info()
     {
-        return $"Tiger,{Id},{name},{age},{weight},{deceased},{deathDate}";
+        return $"Tiger,{Id},{name},{age},{deceased},{deathDate},{weight}";
     }
 
     public Tiger(string name, int age, int weight) : base(name, age)

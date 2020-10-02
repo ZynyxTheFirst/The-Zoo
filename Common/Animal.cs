@@ -1,6 +1,4 @@
-﻿using System;
-
-abstract class Animal
+﻿abstract class Animal
 {
     readonly RndIDGen rid = new RndIDGen();
 

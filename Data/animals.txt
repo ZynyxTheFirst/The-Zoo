@@ -1,1 +1,2 @@
-﻿Tiger,85963,hej,12,33,false,
+Tiger,124921,hej,33,False,,12
+Owl,84132,jord,10,True,20201002,84

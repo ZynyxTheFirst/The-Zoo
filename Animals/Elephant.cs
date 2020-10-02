@@ -1,6 +1,4 @@
-﻿using System;
-
-class Elephant : Animal
+﻿class Elephant : Animal
 {
     readonly RndIDGen rid = new RndIDGen();
     public int trunkLength;
@@ -21,7 +19,7 @@ class Elephant : Animal
 
     public override string Info()
     {
-        return $"Elephant,{Id},{name},{age},{trunkLength},{deceased},{deathDate}";
+        return $"Elephant,{Id},{name},{age},{deceased},{deathDate},{trunkLength}";
     }
 
     public Elephant(string name, int age, int trunkLenght) : base(name, age)
