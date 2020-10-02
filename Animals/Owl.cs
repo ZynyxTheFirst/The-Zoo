@@ -4,8 +4,8 @@
     public int wingspan;
     protected override int Id
     {
-        get { return Id; }
-        set { Id = rid.OwlId(wingspan); }
+        get { return rid.OwlId(wingspan); }
+        set {; }
     }
 
     public override string ToString()

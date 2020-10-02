@@ -39,8 +39,6 @@ class RndIDGen
 
         tempId = Int32.Parse(tempName2);
         tempId *= weight;
-        string id = tempId.ToString().Substring(0, 6);
-
-        return Int32.Parse(id);
+        return Math.Abs(Int32.Parse(tempId.ToString().Substring(0, 6)));
     }
 }

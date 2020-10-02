@@ -19,21 +19,32 @@ class Program
     public void Run()
     {
         utility.NewAnimal("Tiger", "hej", 12, 33);
-        utility.Load();
+        utility.Print();
+        
+
         //cc.MakeClass();
         //Console.WriteLine(rid.AnimalId());
         //cc.GetFinal();
         //cc.MakeClass();
-        string input = Console.ReadLine().ToLower();
-        string[] command = input.Split(" ");
+        
+        
         while (true)
         {
+            string input = Console.ReadLine().ToLower();
+            string[] command = input.Split(" ");
+
             switch (command[0])
             {
                 case "exit":
+                    utility.Save();
                     Environment.Exit(0);
                     break;
-                
+                case "add":
+                    utility.NewAnimal(command[1], command[2], Int32.Parse(command[3]), Int32.Parse(command[4]));
+                    break;
+                case "print":
+                    utility.Print();
+                    break;
                 default:
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("Unknown command");

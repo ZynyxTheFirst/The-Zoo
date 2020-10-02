@@ -4,8 +4,8 @@
     public int trunkLength;
     protected override int Id
     {
-        get { return Id; }
-        set { Id = rid.ElephantId(trunkLength); }
+        get { return rid.ElephantId(trunkLength); }
+        set {; }
     }
 
     public override string ToString()

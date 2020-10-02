@@ -14,37 +14,27 @@ class Utility
         {
             animalsw.WriteLine(a.Info());
         }
-    }
-    public void TestTiger()
-    {
-        Tiger t = new Tiger("TestTiger", 5, 5);
-        animals.Add(t);
+        animalsw.Close();
     }
 
-    public void Load()
+    public void Print()
     {
-        foreach (Animal a in animals)
+        if (animals.Count != 0)
         {
-            Console.WriteLine(a.ToString());
+            foreach (Animal a in animals)
+            {
+                Console.WriteLine(a.ToString());
+            }
         }
+        Console.WriteLine("empty.");
     }
-
-    public void AddAnimal(string type)
-    {
-        Type t = Type.GetType(type, true);
-
-        if (t == typeof(Animal))
-        {
-            Animal a = (Animal)Activator.CreateInstance(t);
-        }
-    }
-    public void CheckDuplicate(Animal animal, List<Animal> animals)
+    public void CheckDuplicate(string name, List<Animal> animals)
     {
         for (int i = 0; i < animals.Count | i < animals.Count; i++)
         {
             if (animals[i] != null)
             {
-                if (animals[i].GetName().ToLower() == animal.GetName().ToLower())
+                if (animals[i].GetName().ToLower() == name.ToLower())
                 {
                     throw new Exception();
                 }
@@ -53,7 +43,8 @@ class Utility
     }
     public void NewAnimal(string t, string name, int age, int unique)
     {
-        Type type = Type.GetType(t, true);
+        CheckDuplicate(name, animals);
+        Type type = Type.GetType(System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(t.ToLower()), true);
 
         var temp = Activator.CreateInstance(type);
 
