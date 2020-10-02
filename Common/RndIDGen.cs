@@ -28,7 +28,6 @@ class RndIDGen
     {
         string tempName;
         string tempName2 = "";
-        int tempId;
         byte[] charValue = Encoding.ASCII.GetBytes(name.Substring(0, 3));
 
         for (int i = 0; i < charValue.Length; i++)
@@ -37,7 +36,7 @@ class RndIDGen
             tempName2 += tempName;
         }
 
-        tempId = Int32.Parse(tempName2);
+        int tempId = Int32.Parse(tempName2);
         tempId *= weight;
         return Math.Abs(Int32.Parse(tempId.ToString().Substring(0, 6)));
     }

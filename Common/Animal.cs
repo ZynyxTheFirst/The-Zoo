@@ -1,4 +1,6 @@
-﻿abstract class Animal
+﻿using System;
+
+abstract class Animal
 {
     readonly RndIDGen rid = new RndIDGen();
 
@@ -10,6 +12,14 @@
     
     protected string name;
     protected int age;
+    protected bool deceased;
+    protected string deathDate = null;
+
+    public void SetDeath(string Date)
+    {
+        deceased = true;
+        deathDate = Date;
+    }
 
     public string GetName()
     {
@@ -17,11 +27,15 @@
     }
     public override string ToString()
     {
-        return $"Id: {Id}\nName: {name}\nAge: {age}";
+        if (deceased == true)
+        {
+            return $"DECEASED; Date of Death: {deathDate}, Id: {Id}, Name: {name}, Age: {age}";
+        }
+        return $"Id: {Id}, Name: {name}, Age: {age}";
     }
     public virtual string Info()
     {
-        return $"{Id},{name},{age}";
+        return $"{Id},{name},{age},{Convert.ToInt32(deceased)},{deathDate}";
     }
     public Animal(string name, int age)
     {

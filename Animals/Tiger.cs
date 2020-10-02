@@ -1,4 +1,6 @@
-﻿class Tiger : Animal
+﻿using System;
+
+class Tiger : Animal
 {
     readonly RndIDGen rid = new RndIDGen();
     public int weight;
@@ -10,12 +12,16 @@
 
     public override string ToString()
     {
-        return $"Id: {Id}\nName: {name}\nAge: {age}\nWeight: {weight}";
+        if (deceased == true)
+        {
+            return $"Tiger; DECEASED; Date of Death: {deathDate}, Id: {Id}, Name: {name}, Age: {age}, Weight: {weight}";
+        }
+        return $"Tiger; Id: {Id}, Name: {name}, Age: {age}, Weight: {weight}";
     }
 
     public override string Info()
     {
-        return $"{Id},{name},{age},{weight}";
+        return $"Tiger,{Id},{name},{age},{weight},{Convert.ToInt32(deceased)},{deathDate}";
     }
 
     public Tiger(string name, int age, int weight) : base(name, age)

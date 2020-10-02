@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 class Program
 {
     readonly Utility utility = new Utility();

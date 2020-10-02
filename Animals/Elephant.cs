@@ -1,4 +1,6 @@
-﻿class Elephant : Animal
+﻿using System;
+
+class Elephant : Animal
 {
     readonly RndIDGen rid = new RndIDGen();
     public int trunkLength;
@@ -10,15 +12,21 @@
 
     public override string ToString()
     {
-        return $"Id: {Id}\nName: {name}\nAge: {age}\nTrunkLength: {trunkLength}";
+        if (deceased == true)
+        {
+            return $"Elephant; DECEASED; Date of Death: {deathDate}, Id: {Id}, Name: {name}, Age: {age}, TrunkLength: {trunkLength}";
+        }
+        return $"Elephant; Id: {Id}, Name: {name}, Age: {age}, TrunkLength: {trunkLength}";
     }
+
     public override string Info()
     {
-        return $"{Id},{name},{age},{trunkLength}";
+        return $"Elephant,{Id},{name},{age},{trunkLength},{Convert.ToInt32(deceased)},{deathDate}";
     }
 
     public Elephant(string name, int age, int trunkLenght) : base(name, age)
     {
         this.trunkLength = trunkLenght;
     }
+    public Elephant() { }
 }

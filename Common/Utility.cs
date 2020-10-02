@@ -16,6 +16,17 @@ class Utility
         }
         animalsw.Close();
     }
+    public void Load()
+    {
+        StreamReader animalsr = new StreamReader(path);
+        string text;
+        while ((text = animalsr.ReadLine()) != null)
+        {
+            string[] strings = text.Split(char.Parse(","));
+            NewAnimal(strings[0], strings[1], Int32.Parse(strings[2]), Int32.Parse(strings[3]), Convert.ToBoolean(strings[4]), strings[5]);
+        }
+        animalsr.Close();
+    }
 
     public void Print()
     {
@@ -24,6 +35,7 @@ class Utility
             foreach (Animal a in animals)
             {
                 Console.WriteLine(a.ToString());
+                return;
             }
         }
         Console.WriteLine("empty.");
@@ -41,34 +53,58 @@ class Utility
             }
         }
     }
-    public void NewAnimal(string t, string name, int age, int unique)
+    public void NewAnimal(string t, string name, int age, int unique, bool deceased = false, string date = null)
     {
-        CheckDuplicate(name, animals);
-        Type type = Type.GetType(System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(t.ToLower()), true);
-
-        var temp = Activator.CreateInstance(type);
-
-        if (temp is Animal)
+        try
         {
-            Type[] args = { typeof(string), typeof(int), typeof(int) };
-            ConstructorInfo constructorInfoObj = type.GetConstructor(args);
-            if (constructorInfoObj != null)
-            {
-                //input parameters
-                var animal = Activator.CreateInstance(type, name, age, unique);
-                animals.Add(animal as Animal);
-                return;
-            }
+            CheckDuplicate(name, animals);
+            Type type = Type.GetType(System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(t.ToLower()), true);
 
-            args = new Type[2] { args[0], args[1] };
-            constructorInfoObj = type.GetConstructor(args);
+            var temp = Activator.CreateInstance(type);
 
-            if (constructorInfoObj != null)
+            if (temp is Animal)
             {
-                var animal = Activator.CreateInstance(type, name, age);
-                animals.Add(animal as Animal);
-                return;
+                Type[] args = { typeof(string), typeof(int), typeof(int) };
+                ConstructorInfo constructorInfoObj = type.GetConstructor(args);
+                if (constructorInfoObj != null)
+                {
+                    //input parameters
+                    var animal = Activator.CreateInstance(type, name, age, unique);
+                    animals.Add(animal as Animal);
+                    return;
+                }
+
+                args = new Type[2] { args[0], args[1] };
+                constructorInfoObj = type.GetConstructor(args);
+
+                if (constructorInfoObj != null)
+                {
+                    var animal = Activator.CreateInstance(type, name, age);
+                    animals.Add(animal as Animal);
+                    if (deceased == true)
+                    {
+                        (animal as Animal).SetDeath(date);
+                    }
+                    return;
+                }
             }
         }
+        catch { throw new Exception(); }
+    }
+
+    public void RegisterDeath(string name, string date)
+    {
+        try
+        {
+            for (int i = animals.Count - 1; i >= 0; i--)
+            {
+                if (animals[i].GetName().ToLower() == name)
+                {
+                    Animal animal = animals[i];
+                    animal.SetDeath(date);
+                }
+            }
+        }
+        catch { throw new Exception(); }
     }
 }
