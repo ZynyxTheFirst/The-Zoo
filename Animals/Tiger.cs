@@ -21,7 +21,7 @@ class Tiger : Animal
 
     public override string Info()
     {
-        return $"Tiger,{Id},{name},{age},{weight},{Convert.ToInt32(deceased)},{deathDate}";
+        return $"Tiger,{Id},{name},{age},{weight},{deceased},{deathDate}";
     }
 
     public Tiger(string name, int age, int weight) : base(name, age)

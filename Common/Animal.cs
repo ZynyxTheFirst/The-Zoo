@@ -35,7 +35,7 @@ abstract class Animal
     }
     public virtual string Info()
     {
-        return $"{Id},{name},{age},{Convert.ToInt32(deceased)},{deathDate}";
+        return $"{Id},{name},{age},{deceased},{deathDate}";
     }
     public Animal(string name, int age)
     {

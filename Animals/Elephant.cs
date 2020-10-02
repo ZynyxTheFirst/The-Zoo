@@ -21,7 +21,7 @@ class Elephant : Animal
 
     public override string Info()
     {
-        return $"Elephant,{Id},{name},{age},{trunkLength},{Convert.ToInt32(deceased)},{deathDate}";
+        return $"Elephant,{Id},{name},{age},{trunkLength},{deceased},{deathDate}";
     }
 
     public Elephant(string name, int age, int trunkLenght) : base(name, age)

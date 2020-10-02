@@ -21,7 +21,7 @@ class Owl : Animal
     
     public override string Info()
     {
-        return $"Owl,{Id},{name},{age},{wingspan},{Convert.ToInt32(deceased)},{deathDate}";
+        return $"Owl,{Id},{name},{age},{wingspan},{deceased},{deathDate}";
     }
 
     public Owl(string name, int age, int wingspan) : base(name, age)

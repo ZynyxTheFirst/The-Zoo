@@ -16,12 +16,31 @@ class RndIDGen
 
     public int ElephantId(int trunkLength)
     {
-        throw new NotImplementedException();
+        string tempId = "";
+        string[] trunkthingy = new string[10];
+
+        for (int i = 0; i < trunkthingy.Length; i++)
+        {
+            trunkthingy[i] = trunkLength.ToString();
+            tempId += trunkthingy[i];
+        }
+
+        return Int32.Parse(tempId.ToString().Substring(0, 6));
     }
 
     public int OwlId(int wingspan)
     {
-        throw new NotImplementedException();
+        int tempId = RND(100, 999);
+
+        string id = wingspan.ToString();
+        while (id.Length < 3)
+        {
+            string temp = "0";
+            string temp2 = id;
+            temp += temp2;
+            id = temp;
+        }
+        return Int32.Parse(id += tempId);
     }
 
     public int TigerId(string name, int weight)

@@ -16,6 +16,7 @@ class Utility
         }
         animalsw.Close();
     }
+
     public void Load()
     {
         StreamReader animalsr = new StreamReader(path);
@@ -23,7 +24,15 @@ class Utility
         while ((text = animalsr.ReadLine()) != null)
         {
             string[] strings = text.Split(char.Parse(","));
-            NewAnimal(strings[0], strings[1], Int32.Parse(strings[2]), Int32.Parse(strings[3]), Convert.ToBoolean(strings[4]), strings[5]);
+            if (Convert.ToBoolean(strings[5]) == true)
+            {
+                NewAnimal(strings[0], strings[2], Int32.Parse(strings[3]), Int32.Parse(strings[4]), Convert.ToBoolean(strings[5]), strings[6]);
+            }
+            else
+            {
+                NewAnimal(strings[0], strings[2], Int32.Parse(strings[3]), Int32.Parse(strings[4]), Convert.ToBoolean(strings[5]));
+            }
+            
         }
         animalsr.Close();
     }
@@ -40,6 +49,7 @@ class Utility
         }
         Console.WriteLine("empty.");
     }
+
     public void CheckDuplicate(string name, List<Animal> animals)
     {
         for (int i = 0; i < animals.Count | i < animals.Count; i++)
@@ -53,6 +63,7 @@ class Utility
             }
         }
     }
+
     public void NewAnimal(string t, string name, int age, int unique, bool deceased = false, string date = null)
     {
         try
@@ -106,5 +117,10 @@ class Utility
             }
         }
         catch { throw new Exception(); }
+    }
+
+    public void Sort()
+    {
+
     }
 }
