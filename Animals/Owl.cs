@@ -12,6 +12,7 @@
     {
         return $"Id: {Id}\nName: {name}\nAge: {age}\nWingspan: {wingspan}";
     }
+    
     public override string Info()
     {
         return $"{Id},{name},{age},{wingspan}";

@@ -18,8 +18,10 @@ class Program
 
     public void Run()
     {
+        utility.NewAnimal("Tiger", "hej", 12, 33);
+        utility.Load();
         //cc.MakeClass();
-        Console.WriteLine(rid.AnimalId());
+        //Console.WriteLine(rid.AnimalId());
         //cc.GetFinal();
         //cc.MakeClass();
         string input = Console.ReadLine().ToLower();

@@ -4,8 +4,8 @@
     public int weight;
     protected override int Id
     {
-        get { return Id; }
-        set { Id = rid.TigerId(name, weight); }
+        get { return rid.TigerId(name, weight); }
+        set {; }
     }
 
     public override string ToString()
@@ -22,4 +22,5 @@
     {
         this.weight = weight;
     }
+    public Tiger() { }
 }

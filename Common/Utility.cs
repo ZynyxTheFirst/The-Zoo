@@ -12,13 +12,21 @@ class Utility
         StreamWriter animalsw = new StreamWriter(path, true);
         foreach (Animal a in animals)
         {
-            animalsw.WriteLine(a.Info()); ;
+            animalsw.WriteLine(a.Info());
         }
     }
     public void TestTiger()
     {
         Tiger t = new Tiger("TestTiger", 5, 5);
         animals.Add(t);
+    }
+
+    public void Load()
+    {
+        foreach (Animal a in animals)
+        {
+            Console.WriteLine(a.ToString());
+        }
     }
 
     public void AddAnimal(string type)
@@ -43,7 +51,7 @@ class Utility
             }
         }
     }
-    public void NewAnimal(string t, string name, int age, string unique)
+    public void NewAnimal(string t, string name, int age, int unique)
     {
         Type type = Type.GetType(t, true);
 
@@ -51,7 +59,7 @@ class Utility
 
         if (temp is Animal)
         {
-            Type[] args = { typeof(string), typeof(int), typeof(string) };
+            Type[] args = { typeof(string), typeof(int), typeof(int) };
             ConstructorInfo constructorInfoObj = type.GetConstructor(args);
             if (constructorInfoObj != null)
             {

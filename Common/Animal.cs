@@ -1,14 +1,20 @@
 ﻿abstract class Animal
 {
     readonly RndIDGen rid = new RndIDGen();
+
     protected virtual int Id
     {
-        get { return Id; }
-        set { Id = rid.AnimalId(); }
+        get { return rid.AnimalId(); }
+        set {; }
     }
-    protected string name { public get; }
+    
+    protected string name;
     protected int age;
 
+    public string GetName()
+    {
+        return name;
+    }
     public override string ToString()
     {
         return $"Id: {Id}\nName: {name}\nAge: {age}";
@@ -22,4 +28,5 @@
         this.name = name;
         this.age = age;
     }
+    public Animal() { }
 }
