@@ -1,16 +1,21 @@
 ﻿abstract class Animal
 {
-    protected string name;
+    readonly RndIDGen rid = new RndIDGen();
+    protected virtual int Id
+    {
+        get { return Id; }
+        set { Id = rid.AnimalId(); }
+    }
+    protected string name { public get; }
     protected int age;
 
-    //public abstract void SetUniquiMember(string value);
     public override string ToString()
     {
-        return "Name:" + name + "\nAge:" + age;
+        return $"Id: {Id}\nName: {name}\nAge: {age}";
     }
     public virtual string Info()
     {
-        return $"{name},{age}";
+        return $"{Id},{name},{age}";
     }
     public Animal(string name, int age)
     {

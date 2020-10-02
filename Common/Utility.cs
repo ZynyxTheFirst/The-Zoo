@@ -1,11 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 
 class Utility
 {
     private readonly string path = @"..\..\..\Data\animals.txt";
     readonly List<Animal> animals = new List<Animal>();
+    public void Save()
+    {
+        StreamWriter animalsw = new StreamWriter(path, true);
+        foreach (Animal a in animals)
+        {
+            animalsw.WriteLine(a.Info()); ;
+        }
+    }
     public void TestTiger()
     {
         Tiger t = new Tiger("TestTiger", 5, 5);
@@ -16,10 +25,23 @@ class Utility
     {
         Type t = Type.GetType(type, true);
 
-        if(t == typeof(Animal))
-		{
+        if (t == typeof(Animal))
+        {
             Animal a = (Animal)Activator.CreateInstance(t);
-		}
+        }
+    }
+    public void CheckDuplicate(Animal animal, List<Animal> animals)
+    {
+        for (int i = 0; i < animals.Count | i < animals.Count; i++)
+        {
+            if (animals[i] != null)
+            {
+                if (animals[i].GetName().ToLower() == animal.GetName().ToLower())
+                {
+                    throw new Exception();
+                }
+            }
+        }
     }
     public void NewAnimal(string t, string name, int age, string unique)
     {
