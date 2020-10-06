@@ -104,7 +104,7 @@ class Utility
                 }
             }
         }
-        catch { throw new Exception(); }
+        catch { Console.WriteLine("Error"); }
     }
 
     public void RegisterDeath(string name, string date)
@@ -123,8 +123,48 @@ class Utility
         catch { throw new Exception(); }
     }
 
-    public void Sort()
+    private void Sort(List<Animal> list)
     {
-        
+        int min;
+        for (int i = 0; i < list.Count - 1; i++)
+        {
+            min = i;
+            for (int index = i + 1; index < list.Count; index++)
+            {
+                if (list[index].name.CompareTo(list[min].name) < 0)
+                {
+                    min = index;
+                }
+            }
+            if (min != i)
+            {
+                Animal temp = list[i];
+                list[i] = list[min];
+                list[min] = temp;
+            }
+        }
+    }
+
+    public void SortSpeciesName()
+    {
+        Sort(animals);
+        foreach (Animal a in animals)
+        {
+            if (a is Tiger)
+            {
+                Tiger temp = a as Tiger;
+                Console.WriteLine(a.name + temp.weight);
+            }
+            if (a is Elephant)
+            {
+                Elephant temp = a as Elephant;
+                Console.WriteLine(a.name + temp.trunkLength);
+            }
+            if (a is Owl)
+            {
+                Owl temp = a as Owl;
+                Console.WriteLine(a.name + temp.wingspan);
+            }
+        }
     }
 }

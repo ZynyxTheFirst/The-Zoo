@@ -3,6 +3,7 @@
 class Program
 {
     readonly Utility utility = new Utility();
+    readonly CreateClass cc = new CreateClass();
     static void Main()
     {
         Program p = new Program();
@@ -13,8 +14,10 @@ class Program
     {
         //utility.Save();
         utility.Load();
+        cc.MakeClass();
+        //utility.SortSpeciesName();
         //utility.NewAnimal("Tiger", "hej", 12, 33);
-           
+        /*  
         while (true)
         {
             string input = Console.ReadLine().ToLower();
@@ -63,6 +66,6 @@ class Program
                     Console.ResetColor();
                     break;
             }
-        }
+        }*/
     }
 }

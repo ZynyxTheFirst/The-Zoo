@@ -1,51 +1,59 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 
 class CreateClass
 {
-    readonly List<CreateClass> createClasses = new List<CreateClass>();
-    readonly List<string> strings = new List<string>();
-    readonly List<string> integers = new List<string>();
-
-    public string className;
-
+    private string className;
+    private string unique;
+    private bool containsUnique;
+    
     public void MakeClass()
     {
         CreateClass cc = new CreateClass();
         Console.WriteLine("Enter name: \n>>>");
-        cc.className = (Console.ReadLine().ToLower());
-        Console.WriteLine("Add Integer attribute y/n?");
+        string name = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Console.ReadLine().ToLower());
+        if (name.Contains(" "))
+        {
+            Console.WriteLine("no spaces");
+            return;
+        }
+        cc.className = name;
+        Console.WriteLine("Add unique Integer attribute y/n?");
         if (Console.ReadLine().ToLower() == "y")
         {
-            while (true)
+            bool loop = true;
+            Console.WriteLine("Enter name: \n>>>");
+            while (loop == true)
             {
-                Console.WriteLine("Enter atribute name\n>>>");
-                cc.integers.Add(Console.ReadLine().ToLower());
-                Console.WriteLine("Add another y/n?");
-                if (Console.ReadLine().ToLower() == "n")
+                string input = Console.ReadLine().ToLower();
+                if (input.Contains(" "))
                 {
-                    break;
+                    Console.WriteLine("no spaces");
+                    return;
+                }
+                switch (input)
+                {
+                    case "name":
+                    case "age":
+                    case "deceased":
+                    case "deathDate":
+                    case "id":
+                    case "":
+                        Console.WriteLine("name taken");
+                        break;
+                    case "cancel":
+                        return;
+                    default:
+                        cc.unique = input;
+                        cc.containsUnique = true;
+                        cc.Write();
+                        return;
                 }
             }
         }
-        Console.WriteLine("Add String attribute y/n?");
-        if (Console.ReadLine().ToLower() == "y")
-        {
-            while (true)
-            {
-                Console.WriteLine("Enter atribute name\n>>>");
-                cc.strings.Add(Console.ReadLine().ToLower());
-                Console.WriteLine("Add another y/n?");
-                if (Console.ReadLine().ToLower() == "n")
-                {
-                    break;
-                }
-            }
-        }
-        createClasses.Add(cc);
         cc.Write();
-        cc.GetFinal();
+        return;
     }
 
     public string GenerateClass()
@@ -55,84 +63,45 @@ class CreateClass
 
     public string GenerateCunstructor()
     {
-        string cons1 = "\n    public " + className + "(string name, int age";
-        string cons2 = "";
-        string cons3 = "";
-        string cons4 = ") : base(name, age)\n    {";
-        string cons5 = "";
-        string cons6 = "";
-        foreach (string s in strings)
+        if (containsUnique == true)
         {
-            cons2 = cons2 + ", string " + s;
+            return "\n    public " + className + "(string name, int age, int " + unique + ") : base(name, age)\n    {\n        this." + unique + " = " + unique + ";\n    }\n    public " + className + "() { }\n";
         }
-        foreach (string i in integers)
-        {
-            cons3 = cons3 + ", int " + i;
-        }
-        foreach (string s in strings)
-        {
-            cons5 = cons5 + "\n        this." + s + " = " + s + ";";
-        }
-        foreach (string i in integers)
-        {
-            cons6 = cons6 + "\n        this." + i + " = " + i + ";";
-        }
-        return cons1 + cons2 + cons3 + cons4 + cons5 + cons6 + "\n    }";
+        return "\n    public " + className + "() { }\n";
     }
 
     public string GenerateToString()
     {
-        string ts1 = "\n     public override string ToString()\n     {";
-        string ts2 = "\n" + "        return \"Name: \" + name + \"Age: \" + age";
-        string ts3 = "";
-        string ts4 = "";
-        string ts5 = ";\n     }";
-        foreach (string s in strings)
+        if (containsUnique == true)
         {
-            ts3 = ts3 + " + \"" + s + ": \" + " + s;
+            return "\n    public override string ToString()\n    {\n        if (deceased == true)\n        {\n            return $\"" + className + "; DECEASED; Date of Death: {deathDate}, Id: {Id}, Name: {name}, Age: {age}, " + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(unique.ToLower()) + ": {" + unique + "}\";\n        }\n        return $\"" + className + "; Id: {Id}, Name: {name}, Age: {age}, " + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(unique.ToLower()) + ": {" + unique + "}\";\n    }";
         }
-        foreach (string i in integers)
+        return "\n    public override string ToString()\n    {\n        if (deceased == true)\n        {\n            return $\"" + className + "; DECEASED; Date of Death: {deathDate}, Id: {Id}, Name: {name}, Age: {age}\";\n        }\n        return $\"" + className + "; Id: {Id}, Name: {name}, Age: {age}\";\n    }";
+    }
+
+    public string GenerateInfo()
+    {
+        if (containsUnique == true)
         {
-            ts4 = ts4 + " + \"" + i + ": \" + " + i;
+            return "\n    public override string Info()\n    {\n        return $\"" + className + ",{Id},{name},{age},{deceased},{deathDate},{" + unique + "}}\";\n    }";
         }
-        return ts1 + ts2 + ts3 + ts4 + ts5;
+        return "\n    public override string Info()\n    {\n        return $\"" + className + ",{Id},{name},{age},{deceased},{deathDate}\";\n    }";
     }
 
     public string GenerateBody()
     {
-        string bod1 = "";
-        string bod2 = "";
-        foreach (string s in strings)
+        if (containsUnique == true)
         {
-            bod1 = bod1 + "\n     public string " + s + ";";
+            return "\n    public int " + unique + ";";
         }
-        foreach (string i in integers)
-        {
-            bod2 = bod2 + "\n     public int " + i + ";";
-        }
-        return bod1 + bod2;
-    }
-
-    public string FinalGeneration()
-    {
-        string gClass = GenerateClass();
-        string gBody = GenerateBody();
-        string gToString = GenerateToString();
-        string gConstruct = GenerateCunstructor();
-        string final = gClass + gBody + gToString + gConstruct + "\n}";
-        return final;
+        return null;
     }
 
     public void Write()
     {
         using (StreamWriter sw = new StreamWriter(@"..\..\..\animals\" + className + ".cs"))
         {
-            sw.Write(FinalGeneration());
+            sw.Write(GenerateClass() + GenerateBody() + GenerateToString() + GenerateInfo() + GenerateCunstructor() + "}");
         }
-    }
-
-    public void GetFinal()
-    {
-        Console.WriteLine(FinalGeneration());
     }
 }

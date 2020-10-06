@@ -8,7 +8,7 @@
         set {; }
     }
     
-    protected string name;
+    public string name;
     protected int age;
     protected bool deceased;
     protected string deathDate = null;

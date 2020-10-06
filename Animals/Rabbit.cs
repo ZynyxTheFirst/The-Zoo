@@ -13,6 +13,5 @@
     {
         return $"Rabbit,{Id},{name},{age},{deceased},{deathDate}";
     }
-
+    public Rabbit() { }
 }
-
