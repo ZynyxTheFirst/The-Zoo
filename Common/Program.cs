@@ -4,20 +4,15 @@ class Program
 {
     readonly Utility utility = new Utility();
     readonly CreateClass cc = new CreateClass();
+
     static void Main()
     {
         Program p = new Program();
         p.Run();
     }
-
     public void Run()
     {
-        //utility.Save();
         utility.Load();
-        cc.MakeClass();
-        //utility.SortSpeciesName();
-        //utility.NewAnimal("Tiger", "hej", 12, 33);
-        /*  
         while (true)
         {
             string input = Console.ReadLine().ToLower();
@@ -29,24 +24,45 @@ class Program
                     utility.Save();
                     Environment.Exit(0);
                     break;
-
                 case "add":
-                    if (command.Length != 5)
+                    if (command.Length == 5)
+                    {
+                        try
+                        {
+                            utility.NewAnimal(command[1], command[2], Int32.Parse(command[3]), Int32.Parse(command[4]));
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Error");
+                            break;
+                        }
+                    }
+                    else if (command.Length == 4)
+                    {
+                        try
+                        {
+                            utility.NewAnimal(command[1], command[2], Int32.Parse(command[3]));
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Error");
+                            break;
+                        }
+                    }
+                    else 
                     {
                         Console.WriteLine("syntax error");
                         break;
-                    }
-                    try 
-                    { 
-                        utility.NewAnimal(command[1], command[2], Int32.Parse(command[3]), Int32.Parse(command[4]));
-                    }
-                    catch 
-                    {
-                        Console.WriteLine("syntax error");
-                        break;
-                    }               
+                    }     
                     break;
-
+                case "sort":
+                    if (command.Length != 2)
+                    {
+                        Console.WriteLine("syntax error");
+                        break;
+                    }
+                    utility.Sort(command[1]);
+                    break;
                 case "death":
                     if (command.Length != 3)
                     {
@@ -55,17 +71,22 @@ class Program
                     }
                     utility.RegisterDeath(command[1], command[2]);
                     break;
-
+                case "register":
+                    cc.MakeClass();
+                    break;
                 case "print":
                     utility.Print();
                     break;
-
+                case "help":
+                    utility.Help();
+                    break;
+                case "clear":
+                    Console.Clear();
+                    break;
                 default:
-                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("Unknown command");
-                    Console.ResetColor();
                     break;
             }
-        }*/
+        }
     }
 }

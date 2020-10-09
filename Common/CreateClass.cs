@@ -55,39 +55,34 @@ class CreateClass
         cc.Write();
         return;
     }
-
     public string GenerateClass()
     {
         return "class " + className + " : Animal\n{";
     }
-
     public string GenerateCunstructor()
     {
         if (containsUnique == true)
         {
             return "\n    public " + className + "(string name, int age, int " + unique + ") : base(name, age)\n    {\n        this." + unique + " = " + unique + ";\n    }\n    public " + className + "() { }\n";
         }
-        return "\n    public " + className + "() { }\n";
+        return "\n    public " + className + "(string name, int age) : base(name, age) { }\n    public " + className + "() { }\n";
     }
-
     public string GenerateToString()
     {
         if (containsUnique == true)
         {
-            return "\n    public override string ToString()\n    {\n        if (deceased == true)\n        {\n            return $\"" + className + "; DECEASED; Date of Death: {deathDate}, Id: {Id}, Name: {name}, Age: {age}, " + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(unique.ToLower()) + ": {" + unique + "}\";\n        }\n        return $\"" + className + "; Id: {Id}, Name: {name}, Age: {age}, " + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(unique.ToLower()) + ": {" + unique + "}\";\n    }";
+            return "\npublic int GetUnique()\n    {\n        return " + unique + ";\n    }\n    public override string ToString()\n    {\n        if (deceased == true)\n        {\n            return $\"" + className + "; DECEASED; Date of Death: {deathDate}, Id: {Id}, Name: {name}, Age: {age}, " + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(unique.ToLower()) + ": {" + unique + "}\";\n        }\n        return $\"" + className + "; Id: {Id}, Name: {name}, Age: {age}, " + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(unique.ToLower()) + ": {" + unique + "}\";\n    }";
         }
         return "\n    public override string ToString()\n    {\n        if (deceased == true)\n        {\n            return $\"" + className + "; DECEASED; Date of Death: {deathDate}, Id: {Id}, Name: {name}, Age: {age}\";\n        }\n        return $\"" + className + "; Id: {Id}, Name: {name}, Age: {age}\";\n    }";
     }
-
     public string GenerateInfo()
     {
         if (containsUnique == true)
         {
             return "\n    public override string Info()\n    {\n        return $\"" + className + ",{Id},{name},{age},{deceased},{deathDate},{" + unique + "}}\";\n    }";
         }
-        return "\n    public override string Info()\n    {\n        return $\"" + className + ",{Id},{name},{age},{deceased},{deathDate}\";\n    }";
+        return "\n    public override string Info()\n    {\n        return $\"" + className + ",{Id},{name},{age},{deceased},{deathDate},0\";\n    }";
     }
-
     public string GenerateBody()
     {
         if (containsUnique == true)
@@ -96,7 +91,6 @@ class CreateClass
         }
         return null;
     }
-
     public void Write()
     {
         using (StreamWriter sw = new StreamWriter(@"..\..\..\animals\" + className + ".cs"))

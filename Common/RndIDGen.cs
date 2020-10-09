@@ -8,12 +8,10 @@ class RndIDGen
         Random rnd = new Random();
         return rnd.Next(min, max);
     }
-
     public int AnimalId()
     {
         return RND(99999, 1000000);
     }
-
     public int ElephantId(int trunkLength)
     {
         string tempId = "";
@@ -27,7 +25,6 @@ class RndIDGen
 
         return Int32.Parse(tempId.ToString().Substring(0, 6));
     }
-
     public int OwlId(int wingspan)
     {
         int tempId = RND(100, 999);
@@ -42,7 +39,6 @@ class RndIDGen
         }
         return Int32.Parse(id += tempId);
     }
-
     public int TigerId(string name, int weight)
     {
         string tempName;

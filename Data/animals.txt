@@ -1,2 +1,9 @@
 Tiger,124921,hej,33,False,,12
-Owl,84132,jord,10,True,20201002,84
+Owl,84959,jord,10,True,20201002,84
+Tiger,154059,jey,23,False,,55
+Elephant,444444,jj,333,False,,44
+Elephant,555555,tt,4,False,,55
+Owl,5315,cc,4,False,,5
+Owl,80837,ddd,9,False,,80
+Rabbit,561651,yoyo,22,False,,0
+Rabbit,665019,rr,9,False,,0

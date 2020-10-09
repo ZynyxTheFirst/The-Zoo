@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 class Utility
 {
-    private readonly string path = @"..\..\..\Data\animals.txt";
+    class DuplicateException : Exception { }
+
     readonly List<Animal> animals = new List<Animal>();
+    private readonly string path = @"..\..\..\Data\animals.txt";
+
     public void Save()
     {
         StreamWriter animalsw = new StreamWriter(path);
@@ -16,7 +20,6 @@ class Utility
         }
         animalsw.Close();
     }
-
     public void Load()
     {
         StreamReader animalsr = new StreamReader(path);
@@ -36,7 +39,6 @@ class Utility
         }
         animalsr.Close();
     }
-
     public void Print()
     {
         if (animals.Count != 0)
@@ -49,7 +51,6 @@ class Utility
         }
         Console.WriteLine("empty.");
     }
-
     public void CheckDuplicate(string name, List<Animal> animals)
     {
         for (int i = 0; i < animals.Count | i < animals.Count; i++)
@@ -58,13 +59,12 @@ class Utility
             {
                 if (animals[i].GetName().ToLower() == name.ToLower())
                 {
-                    Console.WriteLine("Name unavailable");
+                    throw new DuplicateException();
                 }
             }
         }
     }
-
-    public void NewAnimal(string t, string name, int age, int unique, bool deceased = false, string date = null)
+    public void NewAnimal(string t, string name, int age, int unique = 0, bool deceased = false, string date = null)
     {
         try
         {
@@ -104,9 +104,9 @@ class Utility
                 }
             }
         }
-        catch { Console.WriteLine("Error"); }
+        catch (DuplicateException) { Console.WriteLine("Name unavailable"); }
+        catch (Exception) { Console.WriteLine("Error"); }
     }
-
     public void RegisterDeath(string name, string date)
     {
         try
@@ -122,49 +122,65 @@ class Utility
         }
         catch { throw new Exception(); }
     }
-
-    private void Sort(List<Animal> list)
+    public void Sort(string t)
     {
-        int min;
-        for (int i = 0; i < list.Count - 1; i++)
+        if (t == "all")
         {
-            min = i;
-            for (int index = i + 1; index < list.Count; index++)
+            List<Animal> sortedanimals = animals.OrderBy(o => o.GetName()).ToList();
+            foreach (Animal a in sortedanimals) { Console.WriteLine(a.ToString()); }
+            return;
+        }
+        try
+        {
+            Type type = Type.GetType(System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(t.ToLower()), true);
+
+            var temp = Activator.CreateInstance(type);
+            
+            if (temp is Animal)
             {
-                if (list[index].name.CompareTo(list[min].name) < 0)
+                Type[] args = { typeof(string), typeof(int), typeof(int) };
+                ConstructorInfo constructorInfoObj = type.GetConstructor(args);
+                if (constructorInfoObj != null)
                 {
-                    min = index;
+                    List<Animal> sortedanimals = animals.OrderByDescending(o => o.GetUnique()).ToList();
+                    foreach (Animal a in sortedanimals)
+                    {
+                        if (a.GetType() == type)
+                        {
+                            Console.WriteLine(a.ToString());
+                        }
+                    }
+                    return;
+                }
+                args = new Type[2] { args[0], args[1] };
+                constructorInfoObj = type.GetConstructor(args);
+
+                if (constructorInfoObj != null)
+                {
+                    List<Animal> sortedanimals = animals.OrderBy(o => o.GetName()).ToList();
+                    foreach (Animal a in sortedanimals)
+                    {
+                        if (a.GetType() == type)
+                        {
+                            Console.WriteLine(a.ToString());
+                        }
+                    }
+                    return;
                 }
             }
-            if (min != i)
-            {
-                Animal temp = list[i];
-                list[i] = list[min];
-                list[min] = temp;
-            }
         }
+        catch (Exception) { Console.WriteLine("Error"); }
     }
-
-    public void SortSpeciesName()
+    public void Help()
     {
-        Sort(animals);
-        foreach (Animal a in animals)
-        {
-            if (a is Tiger)
-            {
-                Tiger temp = a as Tiger;
-                Console.WriteLine(a.name + temp.weight);
-            }
-            if (a is Elephant)
-            {
-                Elephant temp = a as Elephant;
-                Console.WriteLine(a.name + temp.trunkLength);
-            }
-            if (a is Owl)
-            {
-                Owl temp = a as Owl;
-                Console.WriteLine(a.name + temp.wingspan);
-            }
-        }
+        Console.WriteLine("Command:    | Parameters:                  | Effect:");
+        Console.WriteLine("“help”      | none                         | lists all commands");
+        Console.WriteLine("“clear”     | none                         | clears the console");
+        Console.WriteLine("“exit”      | none                         | saves and exits the program");
+        Console.WriteLine("“add”       | [Type][Name][Age]([unique])  | adds a new animal with the specified parameters");
+        Console.WriteLine("“print”     | none                         | lists all animals in order of creation");
+        Console.WriteLine("“sort”      | [(all)/(Type)]               | sorts all animals or all animals of a specified type");
+        Console.WriteLine("“death”     | [Name][Date]                 | registers the death of an animal with a certain date");
+        Console.WriteLine("“register”  | none                         | register a new type (species) of animal");
     }
 }

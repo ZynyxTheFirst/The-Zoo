@@ -1,25 +1,29 @@
 ﻿class Owl : Animal
 {
     readonly RndIDGen rid = new RndIDGen();
+
     public int wingspan;
-    protected override int Id
+    protected override int id
     {
         get { return rid.OwlId(wingspan); }
         set {; }
     }
 
+    public override int GetUnique()
+    {
+        return wingspan;
+    }
     public override string ToString()
     {
         if (deceased == true)
         {
-            return $"Owl; DECEASED; Date of Death: {deathDate}, Id: {Id}, Name: {name}, Age: {age}, Wingspan: {wingspan}";
+            return $"Owl; DECEASED; Date of Death: {deathDate}, Id: {id}, Name: {name}, Age: {age}, Wingspan: {wingspan}";
         }
-        else return $"Owl; Id: {Id}, Name: {name}, Age: {age}, Wingspan: {wingspan}";
+        else return $"Owl; Id: {id}, Name: {name}, Age: {age}, Wingspan: {wingspan}";
     }
-    
     public override string Info()
     {
-        return $"Owl,{Id},{name},{age},{deceased},{deathDate},{wingspan}";
+        return $"Owl,{id},{name},{age},{deceased},{deathDate},{wingspan}";
     }
 
     public Owl(string name, int age, int wingspan) : base(name, age)
